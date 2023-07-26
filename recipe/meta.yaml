@@ -1,5 +1,6 @@
 {% set pkg_name = 'rattler_build_test' %}
-{% set version = '0.0.4' %}
+{% set version = '0.0.2' %}
+
 
 package:
   name: {{ pkg_name }}
@@ -9,7 +10,7 @@ source:
   path: ../
 
 build:
-  number: 1
+  number: 0
   script: "SETUPTOOLS_SCM_PRETEND_VERSION={{ version }} pip install --no-deps --no-build-isolation --ignore-installed ."
   noarch: python
   script_env:
@@ -17,7 +18,7 @@ build:
 
 requirements:
   run:
-  - numpy >=1.22,<1.25
+    - numpy >=1.22,<1.25
   build:
     - pip
     - setuptools
@@ -25,9 +26,3 @@ requirements:
 test:
   imports:
     - "{{ pkg_name }}"
-
-# about:
-#   license: 	BSD-3-Clause
-#   summary: 'WindKit provides core functionalities for working with wind resource data'
-#   license_file: LICENSE
-#   doc_url: https://docs.wasp.dk/windkit/

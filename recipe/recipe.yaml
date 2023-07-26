@@ -1,5 +1,5 @@
 context:
-  version: "0.0.4"
+  version: "0.0.1"
   pkg_name: rattler_build_test
 
 package:
