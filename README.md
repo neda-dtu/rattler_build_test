@@ -24,3 +24,5 @@ Then when I do an `ls output/noarch` I get the files `rattler_build_test-0.0.4-1
 ## Issue 2 
 
 In the same setup, the package build with mambabuild includes the rattler_build_test site-packages directory, while rattler-build's doesn't. 
+
+This is now resolved by moving the python and other dependencies to host instead of build. 
