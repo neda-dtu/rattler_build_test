@@ -1,9 +1,22 @@
 [build-system]
-requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2"]
-build-backend = "setuptools.build_meta"
+requires = ["meson-python", "setuptools_scm[toml]>=6.2"]
+build-backend = "mesonpy"
 
-[tool.setuptools_scm]
-fallback_version = "999"
-
-[tool.isort]
-profile = "black"
+[project]
+name = "rattler_build_test"
+description = "Test for rattler"
+version = "0.2.0"
+license = {text = "BSD-3-Clause"}
+classifiers=[
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Build Tools",
+    "License :: COMMERCIAL",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+requires-python = '>=3.10'
+authors = [
+  {name = 'DTU Wind Energy', email = 'neda@dtu.dk'},
+]
+dependencies = []

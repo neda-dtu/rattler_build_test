@@ -1,28 +1,27 @@
 # Rattler Build Test
 
-This is a small python project setup to test rattler-build for our use cases
+This is a small python project setup to test rattler-build for building with meson-python and f2py
 
-## Issue 1
+This was tested using rattler-build 0.5.2
 
-rattler-build returns a hash based package while mambabuild doesn't.
+## build package [noarch]
 
-All packages can be found in conda_env.yml.
+`rattler-build -r recipe/recipe.yaml`
 
-There are both meta.yaml and recipe.yaml files in the recipe directory, which are used for mambabuild and rattler-build respectively. The meta.yaml is setup to use a version number of 0.0.2, while the recipe.yaml uses version number of 0.0.1. They should behave the same.
+This recipe uses the `c-compiler` and `fortran-compiler` packages directly, which prevents the noarch compiler check from triggering. The package is built and the tests run successfully.
 
+## Build package [Error]
 
-To test I do the following:
+`rattler-build -r recipe/recipe_error.yaml`
 
-```sh
-time conda mambabuild -c conda-forge --output-folder ./output/ recipe/
-time rattler-build build -c conda-forge -r recipe/
+This recipe places the `${{ compiler()}}` Jinja commands in the build section, and removes noarch. 
+
+The error is about patchelf 
+
 ```
-
-Then when I do an `ls output/noarch` I get the files `rattler_build_test-0.0.4-1.tar.bz2` and `rattler_build_test-0.0.4-pyh4616a5c_0.tar.bz2`
-
-
-## Issue 2 
-
-In the same setup, the package build with mambabuild includes the rattler_build_test site-packages directory, while rattler-build's doesn't. 
-
-This is now resolved by moving the python and other dependencies to host instead of build. 
+patchelf for "/tmp/rattler_build_test4tc8NR/lib/python3.11/site-packages/rattler_build_test/fort_add.cpython-311-x86_64-linux-gnu.so": "$ORIGIN/../../..:/home/neil/DTU/repos/tmp/ratter_build_test/output/bld/rattler-build_rattler_build_test_1701707301/build_env/lib"
+Error:   × Relink error: Error relinking shared object: failed to read or write elf file: No such file or directory (os error 2)
+  ├─▶ Error relinking shared object: failed to read or write elf file: No such file or directory (os error 2)
+  ├─▶ failed to read or write elf file: No such file or directory (os error 2)
+  ╰─▶ No such file or directory (os error 2)
+```

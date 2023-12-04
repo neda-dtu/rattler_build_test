@@ -12,7 +12,6 @@ source:
 build:
   number: 0
   script: "SETUPTOOLS_SCM_PRETEND_VERSION=${{ version }} pip install --no-deps --no-build-isolation --ignore-installed ."
-  noarch: python
 
 requirements:
   run:
@@ -27,10 +26,11 @@ requirements:
     - pip
     - setuptools
     - setuptools_scm
+  build:
     - if: unix
       then:
-        - c-compiler
-        - fortran-compiler
+        - ${{ compiler("c") }}
+        - ${{ compiler("fortran") }}
 
 test:
   imports:
